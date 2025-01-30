@@ -1,4 +1,4 @@
-// Updated script.js with Improved Vibration Handling for Main & Sub Counter
+// Updated script.js without Vibration Handling for Main & Sub Counter
 let mainCount = 0;
 let subCount = 0;
 let countingEnabled = true;
@@ -11,26 +11,17 @@ const popup = document.getElementById('popup');
 const openPopupButton = document.getElementById('open-popup');
 const closePopupButton = document.getElementById('close-popup');
 
-// Function to trigger vibration
-function triggerVibration(duration) {
-    if (navigator.vibrate) {
-        navigator.vibrate(duration);
-    }
-}
-
 // Function to increment counters on screen touch
 function incrementCounters(event) {
     if (!countingEnabled || event.target.tagName === "BUTTON") return;
     
     mainCount++;
     mainCounter.textContent = mainCount.toString().padStart(6, '0');
-    triggerVibration(50); // Vibrate for each count
 
     // When main counter reaches a multiple of 108, increment sub counter
     if (mainCount % 108 === 0) {
         subCount++;
         subCounter.textContent = subCount.toString().padStart(6, '0');
-        triggerVibration([100, 50, 100]); // Stronger vibration when sub counter increases
     }
 
     // Update progress circle
