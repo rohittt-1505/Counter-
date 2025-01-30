@@ -7,11 +7,12 @@ let isResetting = false; // Flag to prevent counting when resetting
 
 // Event listener for clicks on the counter container
 document.getElementById("counter-container").addEventListener("click", (e) => {
-    if (e.target.tagName !== "BUTTON" && !isResetting) {  // Ensure click is not on a button
+    // Check if the clicked target is not a button and is within the container
+    if (e.target.tagName !== "BUTTON" && !isResetting) {  
         mainCount++;
         mainCounter.textContent = mainCount.toString().padStart(6, '0'); // Format as 6 digits
 
-        if (mainCount % 108 === 0) {
+        if (mainCount % 10 === 0) {
             subCount++;
             subCounter.textContent = subCount.toString().padStart(6, '0'); // Format as 6 digits
         }

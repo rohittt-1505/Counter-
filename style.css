@@ -12,19 +12,17 @@ html, body {
     height: 100%;
     overflow: hidden;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #111;
-    color: #ffff;
+    background: #1a1a1a; /* Dark background for less strain */
+    color: #66C7FF; /* Soft blue-green color for text */
     text-align: center;
     user-select: none;
 }
 
 #counter-container {
     width: 100%;
-    max-width: 600px;
-    height: 80%;
+    height: 100vh; /* Full viewport height */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -33,50 +31,45 @@ html, body {
 }
 
 .counter-box {
-    background: #222;
-    border: 3px solid #0f0;
+    background: #2a2a2a; /* Slightly lighter dark gray for boxes */
+    border: 3px solid #66C7FF; /* Soft blue-green border */
     padding: 20px;
     border-radius: 10px;
     text-align: center;
     width: 80%;
     max-width: 400px;
     margin: 10px;
-    box-shadow: 0px 0px 25px #0f0;
+    box-shadow: 0px 0px 15px #66C7FF; /* Soft blue-green shadow */
 }
 
-#main-counter {
+#main-counter, #sub-counter {
     font-size: 4rem;
 }
 
-#sub-counter {
-    font-size: 2rem;
-    opacity: 0.8;
-}
-
 button {
-    background: #222;
-    color: #0f0;
-    border: 3px solid #0f0;
+    background: #2a2a2a;
+    color: #66C7FF; /* Soft blue-green button text */
+    border: 3px solid #66C7FF; /* Soft blue-green border for buttons */
     padding: 10px 20px;
     border-radius: 10px;
     margin-top: 10px;
     font-size: 1rem;
     cursor: pointer;
-    box-shadow: 0px 0px 15px #0f0;
+    box-shadow: 0px 0px 15px #66C7FF; /* Soft blue-green shadow */
     transition: background 0.3s ease;
 }
 
 button:hover {
-    background: #ffff;
-    color: #222;
+    background: #66C7FF; /* Soft blue-green hover effect */
+    color: #1a1a1a;
 }
 
 footer {
     width: 100%;
     text-align: center;
     padding: 10px;
-    background: #222;
-    color: #0f0;
+    background: #2a2a2a; /* Matching dark gray footer */
+    color: #66C7FF; /* Soft blue-green footer text */
     position: fixed;
     bottom: 0;
     left: 0;
@@ -98,12 +91,8 @@ footer p {
         max-width: 100%;
     }
 
-    #main-counter {
+    #main-counter, #sub-counter {
         font-size: 3rem;
-    }
-
-    #sub-counter {
-        font-size: 1.5rem;
     }
 
     button {
