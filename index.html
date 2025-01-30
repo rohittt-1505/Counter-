@@ -4,41 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Counter App</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div id="counter-container">
+        <h2>Counter App</h2>
         <div class="counter-box">
-            <h3 id="main-counter-name">Main Counter</h3>
-            <h3 id="sub-counter-name">━━━━━━━━━━</h3>
+            <h3>Main Counter</h3>
             <span id="main-counter">000000</span>
         </div>
         <div class="counter-box">
-            <h3 id="sub-counter-name">Sub Counter</h3>
-            <h3 id="sub-counter-name">━━━━━━━━━━</h3>
+            <h3>Sub Counter</h3>
             <span id="sub-counter">000000</span>
         </div>
 
-        <!-- Open Button -->
-        <button id="open-popup">Open Pop-up</button>
-
-        <!-- Hidden Pop-up for showing reset buttons -->
-        <div id="popup" class="popup">
-            <div class="popup-content">
-                <button id="reset-main">Reset Main Counter</button> <!-- Reset Button for Main Counter -->
-                <button id="reset-sub">Reset Sub Counter</button> <!-- Reset Button for Sub Counter -->
-                <button id="close-popup">Close</button>
-            </div>
-        </div>
+        <button id="logoutButton">Logout</button>
     </div>
 
-    <footer>
-        <p>Developed by <a href="https://rohitrathod.netlify.app/" target="_blank">Rohit Rathod</a></p>
-    </footer>
-
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <script src="script.js"></script>
 </body>
 

@@ -1,68 +1,61 @@
-// Updated script.js without Vibration Handling for Main & Sub Counter
-let mainCount = 0;
-let subCount = 0;
-let countingEnabled = true;
+// Firebase Configuration (Replace with Your Firebase Credentials)
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
 
-const mainCounter = document.getElementById('main-counter');
-const subCounter = document.getElementById('sub-counter');
-const progressCircle = document.getElementById('progress-circle');
-const progressText = document.getElementById('progress-text');
-const popup = document.getElementById('popup');
-const openPopupButton = document.getElementById('open-popup');
-const closePopupButton = document.getElementById('close-popup');
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-// Function to increment counters on screen touch
-function incrementCounters(event) {
-    if (!countingEnabled || event.target.tagName === "BUTTON") return;
+// Login Function
+document.getElementById("loginButton")?.addEventListener("click", () => {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-    mainCount++;
-    mainCounter.textContent = mainCount.toString().padStart(6, '0');
+    auth.signInWithEmailAndPassword(email, password)
+        .then(() => window.location.href = "index.html")
+        .catch(error => alert(error.message));
+});
 
-    // When main counter reaches a multiple of 108, increment sub counter
-    if (mainCount % 108 === 0) {
-        subCount++;
-        subCounter.textContent = subCount.toString().padStart(6, '0');
+// Signup Function
+document.getElementById("signupButton")?.addEventListener("click", () => {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    auth.createUserWithEmailAndPassword(email, password)
+        .then(() => window.location.href = "index.html")
+        .catch(error => alert(error.message));
+});
+
+// Google Sign In
+document.getElementById("googleAuthButton")?.addEventListener("click", () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider)
+        .then(() => window.location.href = "index.html")
+        .catch(error => alert(error.message));
+});
+
+// Logout Function
+document.getElementById("logoutButton")?.addEventListener("click", () => {
+    auth.signOut().then(() => window.location.href = "login.html");
+});
+
+// Counter Logic with Firestore Storage
+let mainCount = 0, subCount = 0;
+auth.onAuthStateChanged(user => {
+    if (user) {
+        db.collection("users").doc(user.uid).get().then(doc => {
+            if (doc.exists) {
+                mainCount = doc.data().mainCounter || 0;
+                subCount = doc.data().subCounter || 0;
+                document.getElementById("main-counter").textContent = mainCount;
+                document.getElementById("sub-counter").textContent = subCount;
+            }
+        });
     }
-
-    // Update progress circle
-    updateProgress();
-}
-
-document.getElementById("counter-container").addEventListener("click", incrementCounters);
-
-function updateProgress() {
-    let progress = (mainCount % 108) / 108 * 100;
-    progressCircle.style.strokeDashoffset = 314 - (314 * progress / 100); // 314 is the circle circumference
-    progressText.textContent = `${Math.round(progress)}%`;
-}
-
-// Handling the opening and closing of the pop-up
-openPopupButton.addEventListener('click', () => {
-    countingEnabled = false; // Disable counting when pop-up is open
-    popup.style.display = 'block'; // Show pop-up when button clicked
-});
-
-closePopupButton.addEventListener('click', () => {
-    countingEnabled = true; // Re-enable counting when pop-up is closed
-    popup.style.display = 'none'; // Close pop-up when button clicked
-});
-
-// Reset functionality
-const resetMainButton = document.getElementById('reset-main');
-const resetSubButton = document.getElementById('reset-sub');
-
-resetMainButton.addEventListener('click', () => {
-    mainCount = 0;
-    mainCounter.textContent = '000000';
-    updateProgress();
-});
-
-resetSubButton.addEventListener('click', () => {
-    subCount = 0;
-    subCounter.textContent = '000000';
-});
-
-// Prevent zooming issue on mobile
-document.addEventListener('gesturestart', function (e) {
-    e.preventDefault();
 });
