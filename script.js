@@ -14,7 +14,7 @@ const closePopupButton = document.getElementById('close-popup');
 // Function to increment counters on screen touch
 function incrementCounters(event) {
     if (!countingEnabled || event.target.tagName === "BUTTON") return;
-    
+
     mainCount++;
     mainCounter.textContent = mainCount.toString().padStart(6, '0');
 
