@@ -1,4 +1,4 @@
-// Updated script.js with Haptic Feedback & Progress Circle
+// Updated script.js with Haptic Feedback, Progress Circle & Pop-up Fix
 let mainCount = 0;
 let subCount = 0;
 let countingEnabled = true;
@@ -7,6 +7,9 @@ const mainCounter = document.getElementById('main-counter');
 const subCounter = document.getElementById('sub-counter');
 const progressCircle = document.getElementById('progress-circle');
 const progressText = document.getElementById('progress-text');
+const popup = document.getElementById('popup');
+const openPopupButton = document.getElementById('open-popup');
+const closePopupButton = document.getElementById('close-popup');
 
 // Function to increment counters on screen touch
 function incrementCounters(event) {
@@ -37,6 +40,17 @@ function updateProgress() {
     progressCircle.style.strokeDashoffset = 314 - (314 * progress / 100); // 314 is the circle circumference
     progressText.textContent = `${Math.round(progress)}%`;
 }
+
+// Handling the opening and closing of the pop-up
+openPopupButton.addEventListener('click', () => {
+    countingEnabled = false; // Disable counting when pop-up is open
+    popup.style.display = 'block'; // Show pop-up when button clicked
+});
+
+closePopupButton.addEventListener('click', () => {
+    countingEnabled = true; // Re-enable counting when pop-up is closed
+    popup.style.display = 'none'; // Close pop-up when button clicked
+});
 
 // Reset functionality
 const resetMainButton = document.getElementById('reset-main');
