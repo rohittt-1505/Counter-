@@ -1,69 +1,68 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// Updated script.js without Vibration Handling for Main & Sub Counter
+let mainCount = 0;
+let subCount = 0;
+let countingEnabled = true;
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyB9BdqXDKnUPiIFRg5AwSCi9Yq7k0kcgOk",
-  authDomain: "counter-1e8c2.firebaseapp.com",
-  projectId: "counter-1e8c2",
-  storageBucket: "counter-1e8c2.firebasestorage.app",
-  messagingSenderId: "213867864186",
-  appId: "1:213867864186:web:0b52d90c3bb58317a7dbc3",
-  measurementId: "G-70ERGZZCN9"
-};
+const mainCounter = document.getElementById('main-counter');
+const subCounter = document.getElementById('sub-counter');
+const progressCircle = document.getElementById('progress-circle');
+const progressText = document.getElementById('progress-text');
+const popup = document.getElementById('popup');
+const openPopupButton = document.getElementById('open-popup');
+const closePopupButton = document.getElementById('close-popup');
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-// 🔹 Redirect to login page if the user is NOT logged in (for index.html)
-auth.onAuthStateChanged(user => {
-    if (!user && window.location.pathname.includes("index.html")) {
-        window.location.href = "login.html"; // Redirect to login if not authenticated
+// Function to increment counters on screen touch
+function incrementCounters(event) {
+    if (!countingEnabled || event.target.tagName === "BUTTON") return;
+
+    mainCount++;
+    mainCounter.textContent = mainCount.toString().padStart(6, '0');
+
+    // When main counter reaches a multiple of 108, increment sub counter
+    if (mainCount % 108 === 0) {
+        subCount++;
+        subCounter.textContent = subCount.toString().padStart(6, '0');
     }
-});
 
-// 🔹 Redirect to counter page if the user IS logged in (for login.html)
-if (window.location.pathname.includes("login.html")) {
-    auth.onAuthStateChanged(user => {
-        if (user) {
-            window.location.href = "index.html"; // Redirect to counter page if logged in
-        }
-    });
+    // Update progress circle
+    updateProgress();
 }
 
-// 🔹 Login Function
-document.getElementById("loginButton")?.addEventListener("click", () => {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+document.getElementById("counter-container").addEventListener("click", incrementCounters);
 
-    auth.signInWithEmailAndPassword(email, password)
-        .then(() => window.location.href = "index.html")
-        .catch(error => alert(error.message));
+function updateProgress() {
+    let progress = (mainCount % 108) / 108 * 100;
+    progressCircle.style.strokeDashoffset = 314 - (314 * progress / 100); // 314 is the circle circumference
+    progressText.textContent = `${Math.round(progress)}%`;
+}
+
+// Handling the opening and closing of the pop-up
+openPopupButton.addEventListener('click', () => {
+    countingEnabled = false; // Disable counting when pop-up is open
+    popup.style.display = 'block'; // Show pop-up when button clicked
 });
 
-// 🔹 Signup Function
-document.getElementById("signupButton")?.addEventListener("click", () => {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    auth.createUserWithEmailAndPassword(email, password)
-        .then(() => window.location.href = "index.html")
-        .catch(error => alert(error.message));
+closePopupButton.addEventListener('click', () => {
+    countingEnabled = true; // Re-enable counting when pop-up is closed
+    popup.style.display = 'none'; // Close pop-up when button clicked
 });
 
-// 🔹 Google Sign In
-document.getElementById("googleAuthButton")?.addEventListener("click", () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider)
-        .then(() => window.location.href = "index.html")
-        .catch(error => alert(error.message));
+// Reset functionality
+const resetMainButton = document.getElementById('reset-main');
+const resetSubButton = document.getElementById('reset-sub');
+
+resetMainButton.addEventListener('click', () => {
+    mainCount = 0;
+    mainCounter.textContent = '000000';
+    updateProgress();
 });
 
-// 🔹 Logout Function (Redirects to login page)
-document.getElementById("logoutButton")?.addEventListener("click", () => {
-    auth.signOut().then(() => window.location.href = "login.html");
+resetSubButton.addEventListener('click', () => {
+    subCount = 0;
+    subCounter.textContent = '000000';
+});
+
+// Prevent zooming issue on mobile
+document.addEventListener('gesturestart', function (e) {
+    e.preventDefault();
 });

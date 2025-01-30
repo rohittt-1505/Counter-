@@ -1,25 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login / Signup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Counter App</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div id="auth-container">
-        <div id="login-signup">
-            <h2>Login / Signup</h2>
-            <input type="email" id="email" placeholder="Email">
-            <input type="password" id="password" placeholder="Password">
-            <button id="signupButton">Sign Up</button>
-            <button id="loginButton">Login</button>
-            <button id="googleAuthButton">Sign In with Google</button>
+    <div id="counter-container">
+        <div class="counter-box">
+            <h3 id="main-counter-name">Main Counter</h3>
+            <h3 id="sub-counter-name">━━━━━━━━━━</h3>
+            <span id="main-counter">000000</span>
+        </div>
+        <div class="counter-box">
+            <h3 id="sub-counter-name">Sub Counter</h3>
+            <h3 id="sub-counter-name">━━━━━━━━━━</h3>
+            <span id="sub-counter">000000</span>
+        </div>
+
+        <!-- Open Button -->
+        <button id="open-popup">Open Pop-up</button>
+
+        <!-- Hidden Pop-up for showing reset buttons -->
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <button id="reset-main">Reset Main Counter</button> <!-- Reset Button for Main Counter -->
+                <button id="reset-sub">Reset Sub Counter</button> <!-- Reset Button for Sub Counter -->
+                <button id="close-popup">Close</button>
+            </div>
         </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <footer>
+        <p>Developed by <a href="https://rohitrathod.netlify.app/" target="_blank">Rohit Rathod</a></p>
+    </footer>
+
     <script src="script.js"></script>
 </body>
+
 </html>
