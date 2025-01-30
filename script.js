@@ -1,61 +1,54 @@
+// Updated script.js with Haptic Feedback & Progress Circle
 let mainCount = 0;
 let subCount = 0;
-let countingEnabled = true; // To track whether counting is enabled or not
+let countingEnabled = true;
 
 const mainCounter = document.getElementById('main-counter');
 const subCounter = document.getElementById('sub-counter');
-const mainCounterName = document.getElementById('main-counter-name');
-const subCounterName = document.getElementById('sub-counter-name');
+const progressCircle = document.getElementById('progress-circle');
+const progressText = document.getElementById('progress-text');
 
 // Function to increment counters on screen touch
 function incrementCounters(event) {
-    if (!countingEnabled || event.target.tagName === "BUTTON") return; // Do not increment if the target is a button
-
-    mainCount++; // Increment main counter on each touch
+    if (!countingEnabled || event.target.tagName === "BUTTON") return;
+    
+    mainCount++;
     mainCounter.textContent = mainCount.toString().padStart(6, '0');
+    
+    // Vibrate on mobile devices
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
+    }
 
-    // When main counter reaches a multiple of 108, increment sub counter
+    // When main counter reaches a multiple of 10, increment sub counter
     if (mainCount % 10 === 0) {
         subCount++;
         subCounter.textContent = subCount.toString().padStart(6, '0');
     }
+
+    // Update progress circle
+    updateProgress();
 }
 
-// Increment counters when screen is clicked (but not on button clicks)
 document.getElementById("counter-container").addEventListener("click", incrementCounters);
 
-// Handling the opening and closing of the pop-up
-const openPopupButton = document.getElementById('open-popup');
-const popup = document.getElementById('popup');
-const closePopupButton = document.getElementById('close-popup');
+function updateProgress() {
+    let progress = (mainCount % 10) / 10 * 100;
+    progressCircle.style.strokeDashoffset = 314 - (314 * progress / 100); // 314 is the circle circumference
+    progressText.textContent = `${Math.round(progress)}%`;
+}
 
-openPopupButton.addEventListener('click', () => {
-    countingEnabled = false; // Disable counting when pop-up is open
-    popup.style.display = 'block'; // Show pop-up when button clicked
-});
-
-closePopupButton.addEventListener('click', () => {
-    countingEnabled = true; // Re-enable counting when pop-up is closed
-    popup.style.display = 'none'; // Close pop-up when button clicked
-});
-
-// Reset counters functionality
+// Reset functionality
 const resetMainButton = document.getElementById('reset-main');
 const resetSubButton = document.getElementById('reset-sub');
-const resetNamesButton = document.getElementById('reset-names');
 
 resetMainButton.addEventListener('click', () => {
     mainCount = 0;
-    mainCounter.textContent = '000000'; // Reset main counter
+    mainCounter.textContent = '000000';
+    updateProgress();
 });
 
 resetSubButton.addEventListener('click', () => {
     subCount = 0;
-    subCounter.textContent = '000000'; // Reset sub counter
-});
-
-// Reset counter names (titles)
-resetNamesButton.addEventListener('click', () => {
-    mainCounterName.textContent = 'Main Counter'; // Reset Main Counter name
-    subCounterName.textContent = 'Sub Counter'; // Reset Sub Counter name
+    subCounter.textContent = '000000';
 });
