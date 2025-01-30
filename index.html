@@ -9,17 +9,33 @@
 <body>
     <div id="counter-container">
         <div class="counter-box">
+            <h3 id="main-counter-name">Main Counter</h3>
+            <h3 id="sub-counter-name">━━━━━━━━━━</h3>
             <span id="main-counter">000000</span>
-            <button id="reset-main">Reset Main Counter</button> <!-- Reset Button for Main Counter -->
         </div>
         <div class="counter-box">
+            <h3 id="sub-counter-name">Sub Counter</h3>
+            <h3 id="sub-counter-name">━━━━━━━━━━</h3>
             <span id="sub-counter">000000</span>
-            <button id="reset-sub">Reset Sub Counter</button> <!-- Reset Button for Sub Counter -->
+        </div>
+
+        <!-- Open Button -->
+        <button id="open-popup">Open Pop-up</button>
+
+        <!-- Hidden Pop-up for showing reset buttons -->
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <button id="reset-main">Reset Main Counter</button> <!-- Reset Button for Main Counter -->
+                <button id="reset-sub">Reset Sub Counter</button> <!-- Reset Button for Sub Counter -->
+                <button id="close-popup">Close</button>
+            </div>
         </div>
     </div>
+
     <footer>
         <p>Developed by <a href="https://rohitrathod.netlify.app/" target="_blank">Rohit Rathod</a></p>
-    </footer>    
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
