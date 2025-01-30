@@ -1,4 +1,4 @@
-// Updated script.js with Haptic Feedback, Progress Circle & Pop-up Fix
+// Updated script.js with Improved Vibration Handling & Pop-up Fix
 let mainCount = 0;
 let subCount = 0;
 let countingEnabled = true;
@@ -18,13 +18,13 @@ function incrementCounters(event) {
     mainCount++;
     mainCounter.textContent = mainCount.toString().padStart(6, '0');
     
-    // Vibrate on mobile devices
+    // Improved Vibration Handling
     if (navigator.vibrate) {
-        navigator.vibrate(50);
+        navigator.vibrate([10, 30, 10]); // Vibrate with small pauses for better effect
     }
 
-    // When main counter reaches a multiple of 10, increment sub counter
-    if (mainCount % 10 === 0) {
+    // When main counter reaches a multiple of 108, increment sub counter
+    if (mainCount % 108 === 0) {
         subCount++;
         subCounter.textContent = subCount.toString().padStart(6, '0');
     }
@@ -36,7 +36,7 @@ function incrementCounters(event) {
 document.getElementById("counter-container").addEventListener("click", incrementCounters);
 
 function updateProgress() {
-    let progress = (mainCount % 10) / 10 * 100;
+    let progress = (mainCount % 108) / 108 * 100;
     progressCircle.style.strokeDashoffset = 314 - (314 * progress / 100); // 314 is the circle circumference
     progressText.textContent = `${Math.round(progress)}%`;
 }
