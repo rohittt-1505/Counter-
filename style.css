@@ -68,16 +68,21 @@ footer {
     width: 100%;
     text-align: center;
     padding: 10px;
-    background: #2a2a2a; /* Matching dark gray footer */
-    color: #66C7FF; /* Soft blue-green footer text */
+    background: #2a2a2a; /* Dark blue background */
+    color: #ffffff; /* White text */
     position: fixed;
     bottom: 0;
     left: 0;
 }
 
-footer p {
-    font-size: 1rem;
-    margin: 0;
+footer a {
+    color: #66C7FF; /* Soft blue color for the link */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    color: #0f0; /* White on hover for better visibility */
 }
 
 @media (max-width: 600px) {
