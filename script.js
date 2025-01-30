@@ -1,4 +1,4 @@
-// Updated script.js with Improved Vibration Handling & Pop-up Fix
+// Updated script.js with Improved Vibration Handling, Pop-up Fix & Zoom Prevention
 let mainCount = 0;
 let subCount = 0;
 let countingEnabled = true;
@@ -65,4 +65,9 @@ resetMainButton.addEventListener('click', () => {
 resetSubButton.addEventListener('click', () => {
     subCount = 0;
     subCounter.textContent = '000000';
+});
+
+// Prevent zooming issue on mobile
+document.addEventListener('gesturestart', function (e) {
+    e.preventDefault();
 });
